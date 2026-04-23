@@ -107,9 +107,16 @@ const API_BASE_URL = getDefaultApiUrl();
 
 const SERVER_URL_KEY = "serverUrl";
 
-// Function to get the API base URL
+// ⭐ DÜZENLENMİŞ: getApiBaseUrl fonksiyonu ⭐
 export const getApiBaseUrl = (): string => {
-  // Check if there's a custom server URL in localStorage
+  // 1. Önce environment variable'ı kontrol et (EN ÖNEMLİ)
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl && envUrl !== 'undefined' && envUrl.trim() !== '') {
+    console.log('[getApiBaseUrl] Using VITE_API_URL:', envUrl);
+    return envUrl;
+  }
+  
+  // 2. localStorage'daki custom URL'yi kontrol et
   const customUrl = localStorage.getItem(SERVER_URL_KEY);
   console.log('[getApiBaseUrl] Checking for custom URL:', customUrl);
   
@@ -117,26 +124,20 @@ export const getApiBaseUrl = (): string => {
     return customUrl;
   }
   
-  // Return default URL (port 8148)
-  if (typeof window !== 'undefined') {
-    // Check if running in Tauri
-    const isTauri = authService.isTauri();
-    console.log('[getApiBaseUrl] Tauri detection:', isTauri);
-    
-    if (isTauri) {
-      // In Tauri, always use localhost:8148 by default
-      console.log('[getApiBaseUrl] Returning Tauri default URL: http://localhost:8148');
-      return 'http://localhost:8148';
-    }
-    
-    // Assume backend is on port 8148 for web
-    const url = new URL(window.location.origin);
-    url.port = "8148";
-    console.log('[getApiBaseUrl] Returning web default URL:', url.origin);
-    return url.origin;
+  // 3. Tauri ortamı için
+  const isTauri = authService.isTauri();
+  console.log('[getApiBaseUrl] Tauri detection:', isTauri);
+  
+  if (isTauri) {
+    // Tauri'de localhost:8148 kullan
+    console.log('[getApiBaseUrl] Returning Tauri default URL: http://localhost:8148');
+    return 'http://localhost:8148';
   }
   
-  return import.meta.env.VITE_API_URL || '';
+  // 4. Web ortamı için - Render'daki backend URL'sini kullan
+  // PORT EKLEME! Sadece ana URL
+  console.log('[getApiBaseUrl] Returning web default URL: https://telegramfileserver.onrender.com');
+  return 'https://telegramfileserver.onrender.com';
 };
 
 // Function to update the API base URL
