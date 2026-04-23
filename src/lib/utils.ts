@@ -14,6 +14,32 @@ declare global {
 let save: ((options: any) => Promise<string | null>) | null = null;
 let httpFetch: ((url: string, options?: any) => Promise<any>) | null = null;
 
+// ⭐⭐⭐ YENİ: API Base URL fonksiyonu ⭐⭐⭐
+export function getApiBaseUrl(): string {
+  // Önce environment variable'ı kontrol et
+  const customUrl = import.meta.env.VITE_API_URL;
+  if (customUrl && customUrl !== 'undefined' && customUrl.trim() !== '') {
+    console.log('[getApiBaseUrl] Using custom URL from env:', customUrl);
+    return customUrl;
+  }
+  
+  // Varsayılan değer (sadece geliştirme için)
+  console.warn('[getApiBaseUrl] No custom URL found, using default');
+  return 'https://telegramfileserver.onrender.com';
+}
+
+// ⭐⭐⭐ YENİ: API istekleri için tam URL oluşturma ⭐⭐⭐
+export function getApiUrl(path: string): string {
+  const baseUrl = getApiBaseUrl();
+  // Eğer path zaten http ile başlıyorsa olduğu gibi döndür
+  if (path.startsWith('http')) {
+    return path;
+  }
+  // Path'in başında slash varsa kaldır, sonra birleştir
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  return `${baseUrl}/${cleanPath}`;
+}
+
 // Dynamically import Tauri modules only in Tauri environment
 // Use a function for Tauri detection to ensure it's checked at runtime rather than module load time
 const isTauriEnv = () => {
