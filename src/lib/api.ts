@@ -406,7 +406,8 @@ export const api = {
             headers: authService.getAuthHeaders(),
         };
         
-        const response = await fetchWithTimeout(`${apiUrl}/user/is-owner`, fetchOptions, 3000);
+        // ⭐ Login kontrolü için timeout değerini artırdık ⭐
+        const response = await fetchWithTimeout(`${apiUrl}/user/is-owner`, fetchOptions, 15000);
 
         if (!response.ok) {
             // Handle specific error cases
