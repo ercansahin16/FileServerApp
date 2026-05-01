@@ -97,7 +97,7 @@ export const TopBar = ({
         >
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder={`Search ${currentPath[currentPath.length - 1]}`}
+            placeholder={`${currentPath[currentPath.length - 1]} içinde ara`}
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             className="pl-10 h-9 bg-muted/50 border-0 backdrop-blur-sm rounded-lg transition-all duration-200 focus:ring-2 focus:ring-primary/50"
@@ -112,15 +112,15 @@ export const TopBar = ({
       <div className="flex items-center justify-between px-4 py-2 border-t border-border/50">
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" className="h-8 text-xs rounded-lg transition-all duration-200 hover:bg-accent hover:scale-105">
-            <span>New</span>
+            <span>Yeni</span>
             <ChevronDown className="ml-1 h-3 w-3" />
           </Button>
           <Button variant="ghost" size="sm" className="h-8 text-xs rounded-lg transition-all duration-200 hover:bg-accent hover:scale-105">
-            <span>Sort</span>
+            <span>Sırala</span>
             <ChevronDown className="ml-1 h-3 w-3" />
           </Button>
           <Button variant="ghost" size="sm" className="h-8 text-xs rounded-lg transition-all duration-200 hover:bg-accent hover:scale-105">
-            <span>View</span>
+            <span>Görünüm</span>
             <ChevronDown className="ml-1 h-3 w-3" />
           </Button>
           {onPaste && (
@@ -130,7 +130,7 @@ export const TopBar = ({
               className="h-8 text-xs rounded-lg transition-all duration-200 hover:bg-accent hover:scale-105"
               onClick={onPaste}
             >
-              Paste
+              Yapıştır
             </Button>
           )}
           <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg transition-all duration-200 hover:bg-accent hover:scale-105">
@@ -148,7 +148,7 @@ export const TopBar = ({
               onToggleDownloadQueue && onToggleDownloadQueue();
             }}
             className="h-8 w-8 rounded-lg transition-all duration-200 hover:bg-accent hover:scale-105"
-            title="Download Queue"
+            title="İndirme Kuyruğu"
             disabled={!onToggleDownloadQueue}
           >
             <Download className="h-4 w-4" />
