@@ -97,44 +97,44 @@ export const NavigationSidebar = ({ className }: NavigationSidebarProps) => {
   };
 
   const baseNavItems = [
-    { name: "Profile", path: "/profile", icon: User },
-    { name: "Settings", path: "/settings", icon: Settings },
-    { name: "Downloads", path: "/downloads", icon: Download },
-    { name: "Usage", path: "/usage", icon: Info },
+    { name: "Profil", path: "/profile", icon: User },
+    { name: "Ayarlar", path: "/settings", icon: Settings },
+    { name: "İndirmeler", path: "/downloads", icon: Download },
+    { name: "Kullanım", path: "/usage", icon: Info },
   ];
 
   const ownerNavItems = [
-    { name: "Users", path: "/users", icon: User },
+    { name: "Kullanıcılar", path: "/users", icon: User },
   ];
 
   const navItems = isOwner ? [...baseNavItems, ...ownerNavItems] : baseNavItems;
 
   const handleMenuClick = (item: string, path?: string) => {
-    if (item === "Profile") {
+    if (item === "Profil") {
       // Dispatch event to show profile in file explorer area
       const event = new CustomEvent('showProfile');
       window.dispatchEvent(event);
       // Also navigate to the profile route
       navigate("/profile");
-    } else if (item === "Settings") {
+    } else if (item === "Ayarlar") {
       // Dispatch event to show settings in file explorer area
       const event = new CustomEvent('showSettings');
       window.dispatchEvent(event);
       // Also navigate to the settings route
       navigate("/settings");
-    } else if (item === "Downloads") {
+    } else if (item === "İndirmeler") {
       // Dispatch event to show downloads in file explorer area
       const event = new CustomEvent('showDownloads');
       window.dispatchEvent(event);
       // Also navigate to the downloads route
       navigate("/downloads");
-    } else if (item === "Users") {
+    } else if (item === "Kullanıcılar") {
       // Dispatch event to show users in file explorer area
       const event = new CustomEvent('showUsers');
       window.dispatchEvent(event);
       // Also navigate to the users route
       navigate("/users");
-    } else if (item === "Logout") {
+    } else if (item === "Çıkış Yap") {
       // Handle logout
       handleLogout();
     } else if (path) {
@@ -294,8 +294,8 @@ export const NavigationSidebar = ({ className }: NavigationSidebarProps) => {
                   <User className="h-5 w-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <h2 className="font-semibold text-sidebar-foreground">User Profile</h2>
-                  <p className="text-sm text-muted-foreground">Online</p>
+                  <h2 className="font-semibold text-sidebar-foreground">Kullanıcı Profili</h2>
+                  <p className="text-sm text-muted-foreground">Çevrimiçi</p>
                 </div>
               </div>
             </div>
@@ -309,7 +309,7 @@ export const NavigationSidebar = ({ className }: NavigationSidebarProps) => {
               }}
             >
               {navItems.map((item, index) => (
-                item.name !== "Logout" && (
+                item.name !== "Çıkış Yap" && (
                   <button
                     key={item.name}
                     onClick={() => handleMenuClick(item.name, item.path)}
@@ -327,7 +327,7 @@ export const NavigationSidebar = ({ className }: NavigationSidebarProps) => {
               {/* Logout button - positioned near the bottom but not at the very end */}
               <div className="pt-4 mt-4 border-t border-sidebar-border">
                 <button
-                  onClick={() => handleMenuClick("Logout")}
+                  onClick={() => handleMenuClick("Çıkış Yap")}
                   className="flex w-full items-center gap-3 px-4 py-3 text-left text-sidebar-foreground transition-all duration-200 hover:bg-sidebar-accent hover:scale-[1.02] rounded-lg"
                   onContextMenu={(e) => {
                     e.preventDefault();
@@ -335,7 +335,7 @@ export const NavigationSidebar = ({ className }: NavigationSidebarProps) => {
                   }}
                 >
                   <LogOut className="h-4 w-4" />
-                  <span>Logout</span>
+                  <span>Çıkış Yap</span>
                 </button>
               </div>
             </nav>
