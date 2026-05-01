@@ -1103,7 +1103,7 @@ export const FileGrid = ({
       <div className="flex-1 flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-2">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-          <p className="text-sm text-muted-foreground">Loading...</p>
+          <p className="text-sm text-muted-foreground">Yükleniyor...</p>
         </div>
       </div>
     );
@@ -1195,8 +1195,8 @@ export const FileGrid = ({
           <div className="absolute inset-0 flex items-center justify-center bg-background/80 rounded-lg z-50 pointer-events-none border-2 border-dashed border-primary">
             <div className="text-center p-6 bg-background rounded-lg shadow-lg pointer-events-auto border border-border">
               <div className="text-2xl mb-2">📁</div>
-              <p className="text-lg font-semibold text-foreground">Drop files here to upload</p>
-              <p className="text-muted-foreground">Upload to {currentFolder}</p>
+              <p className="text-lg font-semibold text-foreground">Dosyaları buraya sürükleyin</p>
+              <p className="text-muted-foreground">{currentFolder} klasörüne yükle</p>
             </div>
           </div>
         )}
@@ -1255,10 +1255,10 @@ export const FileGrid = ({
           <div className="flex flex-col">
             {/* Table header */}
             <div className="grid grid-cols-12 gap-4 px-4 py-2 text-xs font-medium text-muted-foreground border-b border-border bg-muted/50">
-              <div className="col-span-5">Name</div>
-              <div className="col-span-3">Modified Date</div>
-              <div className="col-span-2">Type</div>
-              <div className="col-span-2 text-right">Size</div>
+              <div className="col-span-5">Ad</div>
+              <div className="col-span-3">Değiştirilme Tarihi</div>
+              <div className="col-span-2">Tür</div>
+              <div className="col-span-2 text-right">Boyut</div>
             </div>
             <div className="space-y-0.5">
               {items.map((item, index) => {
@@ -1303,10 +1303,10 @@ export const FileGrid = ({
                         )}
                       </div>
                       <div className="col-span-3 flex items-center text-xs text-muted-foreground">
-                        {item.modified ? new Date(item.modified).toLocaleDateString() : ''}
+                        {item.modified ? new Date(item.modified).toLocaleDateString('tr-TR') : ''}
                       </div>
                       <div className="col-span-2 flex items-center text-xs text-muted-foreground capitalize">
-                        {item.type === 'folder' ? 'Folder' : (item.fileType || 'File')}
+                        {item.type === 'folder' ? 'Klasör' : (item.fileType === 'photo' ? 'Resim' : (item.fileType || 'Dosya'))}
                       </div>
                       <div className="col-span-2 flex items-center justify-end text-xs text-muted-foreground">
                         {item.type === 'folder' ? '' : (item.size ? formatFileSize(item.size) : '')}
