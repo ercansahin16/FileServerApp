@@ -326,8 +326,21 @@ async function downloadFileBrowser(
   // Add authentication headers for browser environment
   const headers: Record<string, string> = {};
   
-  // Check if we're in Tauri and have an auth token
-  // Use both authService and direct window check for consistency
+  // ⭐⭐⭐ WEB TARAYICISI İÇİN AUTH TOKEN'ı EKLE ⭐⭐⭐
+  // Bu, dosya indirme isteklerinde 401 hatasını çözecek
+  try {
+    const authToken = localStorage.getItem('auth_token');
+    if (authToken) {
+      headers['X-Auth-Token'] = authToken;
+      console.log('[downloadFileBrowser] Added auth token to headers');
+    } else {
+      console.warn('[downloadFileBrowser] No auth token found in localStorage');
+    }
+  } catch (e) {
+    console.error('[downloadFileBrowser] Failed to get auth token from localStorage:', e);
+  }
+  
+  // Check if we're in Tauri and have an auth token (Tauri için de aynı token'ı kullan)
   const isTauri = isTauriEnv(); // Use our improved detection function
   console.log('[downloadFileBrowser] Environment check:', { 
     isTauri, 
@@ -335,18 +348,27 @@ async function downloadFileBrowser(
     hasTAURI: typeof window !== 'undefined' && window.__TAURI__ !== undefined 
   });
   
+  // Tauri ortamı için de aynı token'ı kullan (tauri_auth_token yerine auth_token)
   if (isTauri) {
     try {
-      const tauri_auth = localStorage.getItem('tauri_auth_token');
-      console.log('[downloadFileBrowser] Tauri auth token:', tauri_auth);
-      if (tauri_auth) {
-        const authData = JSON.parse(tauri_auth);
-        if (authData.auth_token) {
-          headers['X-Auth-Token'] = authData.auth_token;
+      // Önce normal auth_token'ı dene
+      let authToken = localStorage.getItem('auth_token');
+      if (!authToken) {
+        // Eğer yoksa tauri_auth_token'ı dene
+        const tauri_auth = localStorage.getItem('tauri_auth_token');
+        if (tauri_auth) {
+          const authData = JSON.parse(tauri_auth);
+          if (authData.auth_token) {
+            authToken = authData.auth_token;
+          }
         }
       }
+      if (authToken) {
+        headers['X-Auth-Token'] = authToken;
+        console.log('[downloadFileBrowser] Added auth token for Tauri environment');
+      }
     } catch (e) {
-      console.error('Failed to get auth token from localStorage:', e);
+      console.error('Failed to get auth token for Tauri:', e);
     }
   }
   
