@@ -43,12 +43,12 @@ export const Sidebar = ({ currentPath, onNavigate, onDrop, files, selectedFilter
   };
 
   const filters = [
-    { name: "Home", icon: FolderOpen, filter: "all" },
-    { name: "Images", icon: Image, filter: "photo" },
-    { name: "Documents", icon: FileText, filter: "document" },
-    { name: "Videos", icon: Video, filter: "video" },
-    { name: "Audio", icon: Music, filter: "audio" },
-    { name: "Voice Messages", icon: Mic, filter: "voice" },
+    { name: "Ana Sayfa", icon: FolderOpen, filter: "all" },
+    { name: "Resimler", icon: Image, filter: "photo" },
+    { name: "Belgeler", icon: FileText, filter: "document" },
+    { name: "Videolar", icon: Video, filter: "video" },
+    { name: "Sesler", icon: Music, filter: "audio" },
+    { name: "Sesli Mesajlar", icon: Mic, filter: "voice" },
   ];
 
   // Hide sidebar on mobile since NavigationSidebar will be used instead
@@ -92,7 +92,7 @@ export const Sidebar = ({ currentPath, onNavigate, onDrop, files, selectedFilter
         <div className="flex-1 flex items-center justify-center">
           <div className="flex items-center gap-2">
             <FolderOpen className="w-5 h-5 text-primary" />
-            <span className="font-semibold text-sidebar-foreground text-lg">File Server</span>
+            <span className="font-semibold text-sidebar-foreground text-lg">Dosya Sunucusu</span>
           </div>
         </div>
       </div>
